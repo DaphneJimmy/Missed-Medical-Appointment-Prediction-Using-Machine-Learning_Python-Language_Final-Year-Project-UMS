@@ -1,4 +1,4 @@
-# MissedMedicalAppointmentPredictionUsingMachineLearning_PythonLanguage_FinalYearProjectUMS (This is in Jupyter_Anaconda)
+# MissedMedicalAppointmentPredictionUsingMachineLearning_PythonLanguage_FinalYearProjectUMS (This is to check the accuracy of the machine learning prediction in Jupyter_Anaconda)
 
  In:  import pandas as pd
       import numpy as np
@@ -12,57 +12,64 @@
       from sklearn.metrics import confusion_matrix
       from sklearn.metrics import plot_confusion_matrix
       from sklearn.decomposition import PCA
-      df = pd.read_csv('No_show_issue.csv',
+      
+ In:  df = pd.read_csv('No_show_issue.csv',
                       header=1)
-      df.head()
-      PatientId	AppointmentID	Gender	ScheduledDay	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
+ In:  df.head()
+ Out: PatientId	AppointmentID	Gender	ScheduledDay	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
       0	2.990000e+13	5642903	2	2016-04-29T18:38:08Z	2016-04-29T00:00:00Z	62	JARDIM DA PENHA	2	1	2	2	2	2	2
       1	5.590000e+14	5642503	1	2016-04-29T16:08:27Z	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	2	2	2	2	2	2	2
       2	4.260000e+12	5642549	2	2016-04-29T16:19:04Z	2016-04-29T00:00:00Z	62	MATA DA PRAIA	2	2	2	2	2	2	2
       3	8.680000e+11	5642828	2	2016-04-29T17:29:31Z	2016-04-29T00:00:00Z	8	PONTAL DE CAMBURI	2	2	2	2	2	2	2
       4	8.840000e+12	5642494	2	2016-04-29T16:07:23Z	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	2	1	1	2	2	2	2
-      df.drop('PatientId', axis=1, inplace=True) #set axis=0 to remove rows, axis=1 to remove columns
+      
+ In:  df.drop('PatientId', axis=1, inplace=True) #set axis=0 to remove rows, axis=1 to remove columns
       df.head()
-      AppointmentID	Gender	ScheduledDay	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
+ Out: AppointmentID	Gender	ScheduledDay	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
       0	5642903	2	2016-04-29T18:38:08Z	2016-04-29T00:00:00Z	62	JARDIM DA PENHA	2	1	2	2	2	2	2
       1	5642503	1	2016-04-29T16:08:27Z	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	2	2	2	2	2	2	2
       2	5642549	2	2016-04-29T16:19:04Z	2016-04-29T00:00:00Z	62	MATA DA PRAIA	2	2	2	2	2	2	2
       3	5642828	2	2016-04-29T17:29:31Z	2016-04-29T00:00:00Z	8	PONTAL DE CAMBURI	2	2	2	2	2	2	2
       4	5642494	2	2016-04-29T16:07:23Z	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	2	1	1	2	2	2	2
-      df.drop('AppointmentID', axis=1, inplace=True)
+      
+In:   df.drop('AppointmentID', axis=1, inplace=True)
       df.head()
-      Gender	ScheduledDay	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
+Out:  Gender	ScheduledDay	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
       0	2	2016-04-29T18:38:08Z	2016-04-29T00:00:00Z	62	JARDIM DA PENHA	2	1	2	2	2	2	2
       1	1	2016-04-29T16:08:27Z	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	2	2	2	2	2	2	2
       2	2	2016-04-29T16:19:04Z	2016-04-29T00:00:00Z	62	MATA DA PRAIA	2	2	2	2	2	2	2
       3	2	2016-04-29T17:29:31Z	2016-04-29T00:00:00Z	8	PONTAL DE CAMBURI	2	2	2	2	2	2	2
       4	2	2016-04-29T16:07:23Z	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	2	1	1	2	2	2	2
-      df.drop('ScheduledDay', axis=1, inplace=True)
+      
+In:   df.drop('ScheduledDay', axis=1, inplace=True)
       df.head()
-      Gender	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
+Out:  Gender	AppointmentDay	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
       0	2	2016-04-29T00:00:00Z	62	JARDIM DA PENHA	2	1	2	2	2	2	2
       1	1	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	2	2	2	2	2	2	2
       2	2	2016-04-29T00:00:00Z	62	MATA DA PRAIA	2	2	2	2	2	2	2
       3	2	2016-04-29T00:00:00Z	8	PONTAL DE CAMBURI	2	2	2	2	2	2	2
       4	2	2016-04-29T00:00:00Z	56	JARDIM DA PENHA	2	1	1	2	2	2	2
-      df.drop('AppointmentDay', axis=1, inplace=True)
+      
+In:   df.drop('AppointmentDay', axis=1, inplace=True)
       df.head()
-      Gender	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
+Out:  Gender	Age	Neighbourhood	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
       0	2	62	JARDIM DA PENHA	2	1	2	2	2	2	2
       1	1	56	JARDIM DA PENHA	2	2	2	2	2	2	2
       2	2	62	MATA DA PRAIA	2	2	2	2	2	2	2
       3	2	8	PONTAL DE CAMBURI	2	2	2	2	2	2	2
       4	2	56	JARDIM DA PENHA	2	1	1	2	2	2	2
-      df.drop('Neighbourhood', axis=1, inplace=True)
+      
+In:   df.drop('Neighbourhood', axis=1, inplace=True)
       df.head()
-      Gender	Age	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
+Out:  Gender	Age	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	No-show
       0	2	62	2	1	2	2	2	2	2
       1	1	56	2	2	2	2	2	2	2
       2	2	62	2	2	2	2	2	2	2
       3	2	8	2	2	2	2	2	2	2
       4	2	56	2	1	1	2	2	2	2
-      df.dtypes #identify missing data
-      Gender          int64
+      
+In:   df.dtypes #identify missing data
+Out:  Gender          int64
       Age             int64
       Scholarship     int64
       Hipertension    int64
@@ -72,92 +79,114 @@
       SMS_received    int64
       No-show         int64
       dtype: object
-      df['Gender'].unique()
-      array([2, 1], dtype=int64)
-      df['Age'].unique()
-      array([62, 56,  8, 76, 23, 39, 21, 19, 30, 29, 22, 28, 54, 15, 50, 40, 46,
+      
+In:   df['Gender'].unique()
+Out:  array([2, 1], dtype=int64)
+
+In:   df['Age'].unique()
+Out:  array([62, 56,  8, 76, 23, 39, 21, 19, 30, 29, 22, 28, 54, 15, 50, 40, 46,
               4, 13, 65, 45, 51, 32, 12, 61, 38, 79, 18, 63, 64, 85, 59, 55, 71,
              49, 78, 31, 58, 27,  6,  2, 11,  7,  0,  3,  1, 69, 68, 60, 67, 36,
              10, 35, 20, 26, 34, 33, 16, 42,  5, 47, 17, 41, 44, 37, 24, 66, 77,
              81, 70, 53, 75, 73, 52, 74, 43, 89, 57, 14,  9, 48, 83, 72, 25, 80,
              87, 88, 84, 82, 90, 94, 86, 91, 98], dtype=int64)
-      df['Scholarship'].unique()
-      array([2, 1, 0], dtype=int64)
-      df['Hipertension'].unique()
-      array([1, 2], dtype=int64)
-      df['Diabetes'].unique()
-      array([2, 1], dtype=int64)
-      df['Alcoholism'].unique()
-      array([2, 1], dtype=int64)
-      df['Handcap'].unique()
-      array([2, 1], dtype=int64)
-      df['SMS_received'].unique()
-      array([2, 1], dtype=int64)
-      df['No-show'].unique()
-      array([2, 1], dtype=int64)
-      #dealing with missing data
+             
+In:   df['Scholarship'].unique()
+Out:  array([2, 1, 0], dtype=int64)
+
+In:   df['Hipertension'].unique()
+Out:  array([1, 2], dtype=int64)
+
+In:   df['Diabetes'].unique()
+Out:  array([2, 1], dtype=int64)
+
+In:   df['Alcoholism'].unique()
+Out:  array([2, 1], dtype=int64)
+
+In:   df['Handcap'].unique()
+Out:  array([2, 1], dtype=int64)
+
+In:   df['SMS_received'].unique()
+Out:  array([2, 1], dtype=int64)
+
+In:   df['No-show'].unique()
+Out:  array([2, 1], dtype=int64)
+
+In:   #dealing with missing data
       len(df.loc[(df['Age'] == 0) | (df['Scholarship'] == 0)])
-      38
-      len(df)
-      998
-      df_no_missing = df.loc[(df['Age'] !=0) & (df['Scholarship'] !=0)]
-      len(df_no_missing)
-      960
-      df_no_missing['Age'].unique()
-      array([62, 56,  8, 76, 23, 39, 21, 19, 30, 29, 22, 28, 54, 15, 50, 40, 46,
+Out:  38
+
+In:   len(df)
+Out   998
+
+In:   df_no_missing = df.loc[(df['Age'] !=0) & (df['Scholarship'] !=0)]
+In:   len(df_no_missing)
+Out:  960
+
+In:   df_no_missing['Age'].unique()
+Out:  array([62, 56,  8, 76, 23, 39, 21, 19, 30, 29, 22, 28, 54, 15, 50, 40, 46,
               4, 13, 65, 45, 51, 32, 12, 61, 38, 79, 18, 63, 64, 85, 59, 55, 71,
              49, 78, 31, 58, 27,  6,  2, 11,  7,  3,  1, 69, 68, 60, 67, 36, 10,
              35, 20, 26, 34, 33, 16, 42,  5, 47, 17, 41, 44, 37, 24, 66, 77, 81,
              70, 53, 75, 73, 52, 74, 43, 89, 57, 14,  9, 48, 83, 72, 25, 80, 87,
              88, 84, 82, 90, 94, 86, 91, 98], dtype=int64)
-      df_no_missing['Scholarship'].unique()
-      array([2, 1], dtype=int64)
-      #downsample the data
+             
+In:   df_no_missing['Scholarship'].unique()
+Out:  array([2, 1], dtype=int64)
+
+In:   #downsample the data
       len(df_no_missing)
-      960
-      df_missed = df_no_missing[df_no_missing['No-show'] == 1]
+Out:  960
+
+In:   df_missed = df_no_missing[df_no_missing['No-show'] == 1]
       df_not_missed = df_no_missing[df_no_missing['No-show'] == 2]
-      df_missed_downsampled = resample(df_missed,
+In:   df_missed_downsampled = resample(df_missed,
                                       replace=False,
                                       n_samples=100,
                                       random_state=42)
       len(df_missed_downsampled)
-      100
-      df_not_missed_downsampled = resample(df_not_missed,
+Out:  100
+
+In:   df_not_missed_downsampled = resample(df_not_missed,
                                           replace=False,
                                           n_samples=100,
                                           random_state=42)
       len(df_not_missed_downsampled)
-      100
-      df_downsample = pd.concat([df_missed_downsampled, df_not_missed_downsampled])
+Out:  100
+
+In:   df_downsample = pd.concat([df_missed_downsampled, df_not_missed_downsampled])
       len(df_downsample)
-      200
-      #Format data: split data into dependent and independent variables
+Out:  200
+
+In:   #Format data: split data into dependent and independent variables
       x = df_downsample.drop('No-show', axis=1).copy() 
       x.head()
-      Gender	Age	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received
+Out:  Gender	Age	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received
       631	2	27	2	2	2	2	2	2
       669	2	33	2	2	2	2	1	2
       852	2	23	2	2	2	2	2	2
       298	2	22	2	2	2	2	2	2
       555	2	28	2	2	2	2	2	1
-      y = df_downsample['No-show'].copy()
+      
+In:   y = df_downsample['No-show'].copy()
       y.head()
-      631    1
+Out:  631    1
       669    1
       852    1
       298    1
       555    1
       Name: No-show, dtype: int64
-      #Format the data: one-Hot Encoding
+      
+In:   #Format the data: one-Hot Encoding
       pd.get_dummies(x, columns=['Gender']).head()
-      Age	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	Gender_1	Gender_2
+Out:  Age	Scholarship	Hipertension	Diabetes	Alcoholism	Handcap	SMS_received	Gender_1	Gender_2
       631	27	2	2	2	2	2	2	0	1
       669	33	2	2	2	2	1	2	0	1
       852	23	2	2	2	2	2	2	0	1
       298	22	2	2	2	2	2	2	0	1
       555	28	2	2	2	2	2	1	0	1
-      x_encoded = pd.get_dummies(x, columns=['Gender',
+      
+In:   x_encoded = pd.get_dummies(x, columns=['Gender',
                                             'Scholarship',
                                             'Hipertension',
                                             'Diabetes',
@@ -165,27 +194,29 @@
                                             'Handcap',
                                             'SMS_received'])
       x_encoded.head()
-      Age	Gender_1	Gender_2	Scholarship_1	Scholarship_2	Hipertension_1	Hipertension_2	Diabetes_1	Diabetes_2	Alcoholism_1	Alcoholism_2	Handcap_1	Handcap_2	SMS_received_1	SMS_received_2
+Out:  Age	Gender_1	Gender_2	Scholarship_1	Scholarship_2	Hipertension_1	Hipertension_2	Diabetes_1	Diabetes_2	Alcoholism_1	Alcoholism_2	Handcap_1	Handcap_2	SMS_received_1	SMS_received_2
       631	27	0	1	0	1	0	1	0	1	0	1	0	1	0	1
       669	33	0	1	0	1	0	1	0	1	0	1	1	0	0	1
       852	23	0	1	0	1	0	1	0	1	0	1	0	1	0	1
       298	22	0	1	0	1	0	1	0	1	0	1	0	1	0	1
       555	28	0	1	0	1	0	1	0	1	0	1	0	1	1	0
-      x_train, x_test, y_train, y_test = train_test_split(x_encoded, y, random_state=42)
+      
+In:   x_train, x_test, y_train, y_test = train_test_split(x_encoded, y, random_state=42)
       x_train_scaled = scale(x_train)
       x_test_scaled = scale(x_test)
-      #Build a preliminary SVM
+In:   #Build a preliminary SVM
       clf_svm = SVC(random_state=42)
       clf_svm.fit(x_train_scaled, y_train)
-      SVC(random_state=42)
-      plot_confusion_matrix(clf_svm,
+Out:  SVC(random_state=42)
+
+In:   plot_confusion_matrix(clf_svm,
                            x_test_scaled,
                            y_test,
                            values_format='d',
                            display_labels=["Missed", 'Not Missed'])
-      <sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x241f198b910>
+Out:  <sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x241f198b910>
 
-      #Optimize Parameters with cross validation & GridSearchCV()
+In:   #Optimize Parameters with cross validation & GridSearchCV()
       param_grid = [
           {'C': [0.5, 1, 10, 100],  #value for C must be > 0
            'gamma': ['scale', 1, 0.1, 0.01, 0.001, 0.0001],
@@ -203,21 +234,24 @@
 
       optimal_params.fit(x_train_scaled, y_train)
       print(optimal_params.best_params_)
-      {'C': 0.5, 'gamma': 'scale', 'kernel': 'rbf'}
-      #Building, evaluating, drawing, and interpreting final SVM
+Out:  {'C': 0.5, 'gamma': 'scale', 'kernel': 'rbf'}
+
+In:   #Building, evaluating, drawing, and interpreting final SVM
       clf_svm = SVC(random_state=42, C=0.5, gamma='scale')
       clf_svm.fit(x_train_scaled, y_train)
-      SVC(C=0.5, random_state=42)
-      plot_confusion_matrix(clf_svm,
+Out:  SVC(C=0.5, random_state=42)
+
+In:   plot_confusion_matrix(clf_svm,
                            x_test_scaled,
                            y_test,
                            values_format='d',
                            display_labels=["Missed", "Not Missed"])
-      <sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x241f2167220>
+Out:  <sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x241f2167220>
 
-      len(df_downsample.columns)
-      9
-      pca = PCA() #By default, PCA() centers the data, but does not scale it
+In:   len(df_downsample.columns)
+Out:  9
+
+In:   pca = PCA() #By default, PCA() centers the data, but does not scale it
       x_train_pca = pca.fit_transform(x_train_scaled)
 
       per_var = np.round(pca.explained_variance_ratio_*100, decimals=1)
@@ -235,7 +269,7 @@
       plt.title('Scree Plot')
       plt.show()
 
-      train_pc1_coords = x_train_pca[:, 0]
+ In:  train_pc1_coords = x_train_pca[:, 0]
       train_pc2_coords = x_train_pca[:, 1]
 
       #pc1 contains x-axis coordinates of the data after PCA
@@ -261,8 +295,9 @@
 
       optimal_params.fit(pca_train_scaled, y_train)
       print(optimal_params.best_params_)
-      {'C': 1, 'gamma': 1, 'kernel': 'rbf'}
-      clf_svm = SVC(random_state=42, C=1, gamma=1)
+Out:  {'C': 1, 'gamma': 1, 'kernel': 'rbf'}
+
+In:   clf_svm = SVC(random_state=42, C=1, gamma=1)
       clf_svm.fit(pca_train_scaled, y_train)
 
       #Transform the test dataset with the PCA..
