@@ -1,1 +1,1 @@
-# Missed-Medical-Appointment-Prediction-Using-Machine-Learning_Python-Language_Final-Year-Project-UMS
+# MissedMedicalAppointmentPredictionUsingMachineLearning_PythonLanguage_FinalYearProjectUMS
